@@ -1,47 +1,60 @@
-const words = ['WATER', 'FLOWER', 'RAIN', 'BIRD', 'BEAR', 'GHOST', 'PINK', 'KIWI', 'COIN', 'RING']
-let currentLetter = ['']
-let tries = 0
-let mistakes = 0
+const words = ['WATER', 'FLOWER', 'RAIN', 'BIRD', 'BEAR', 'GHOST', 'PINK', 'KIWI', 'COIN', 'RING'];
+let selectedWord = '';
+let hiddenWord = [];
+let tries = 0;
+let mistakes = 0;
+let guessedLetters = [];
 
-
-function position(words) {
-    return Math.floor(Math.random() * words.length);
+function getRandomWord() {
+	selectedWord = words[Math.floor(Math.random() * words.length)];
+	hiddenWord = Array(selectedWord.length).fill('_');
+	guessedLetters = [];
+	tries = 0;
+	mistakes = 0;
+	game();
 }
-  
 
-function newLetter() {
-    let NewLetter = words[position(11)];
-    currentLetter.push(NewLetter) 
-	document.getElementById('hiddenSpace').textContent = currentLetter;
-	document.getElementById('input').value = '';
+function game() {
+	document.getElementById('hiddenSpace').textContent = hiddenWord.join(' ');
+	document.getElementById('tries').textContent = `Tries: ${tries}`;
+	document.getElementById('mistakes').textContent = `Mistakes: ${mistakes}`;
 	document.getElementById('result').textContent = '';
+	document.getElementById('input').value = '';
 }
 
-function verifyLetter() {
+function checkLetter() {
 	const input = document.getElementById('input').value.toUpperCase();
-	const result = document.getElementById('result');
+	if (input.length === 0 || guessedLetters.includes(input)) return;
 
-	if (filterItems(words, input)) {
-		result.textContent = 'Ganaste';
-		tries++;
-		document.getElementById('tries').textContent = tries;
-		setTimeout(newLetter, 1000);
-	} else if{
-		result.textContent = 'Fallaste';
+	guessedLetters.push(input);
+
+	if (selectedWord.includes(input)) {
+		for (let i = 0; i < selectedWord.length; i++) {
+			if (selectedWord[i] === input) {
+				hiddenWord[i] = input;
+			}
+		}
+	} else {
 		mistakes++;
-		document.getElementById('mistakes').textContent = mistakes;
-	} 
-}
-    
-function gameover(mistakes) {
-    if (mistakes === 6){
-        result.textContent = 'Game Over';}
+	}
+
+	tries++;
+
+	if (hiddenWord.join('') === selectedWord) {
+		document.getElementById('result').textContent = '🎉 Ganaste!';
+		setTimeout(getRandomWord, 2000);
+	} else if (mistakes === 6) {
+		document.getElementById('result').textContent = '💀 Game Over';
+		setTimeout(getRandomWord, 2000);
+	}
+
+	game();
 }
 
+document.getElementById('verifybutton').addEventListener('click', checkLetter);
+document.getElementById('randombutton').addEventListener('click', getRandomWord);
 document.getElementById('input').addEventListener('keypress', function (e) {
-	if (e.key === 'Enter') {
-		checkWord();
-	}
+	if (e.key === 'Enter') checkLetter();
 });
 
-
+getRandomWord();
