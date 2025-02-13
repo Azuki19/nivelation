@@ -1,46 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivelacion</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Juego de Palabras Desordenadas</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+				text-align: center;
+			}
+		
+			button {
+				padding: 10px 20px;
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<h6>Find the</h6>
+		<h1>Hidden Word</h1>
+		<p class="hiddenSpace" id="hiddenSpace"></p>
+		<input type="text" id="input" maxlength="1" />
 
-    <h6> Find the</h6>
-    <h1> Hidden word</h1>
-    <p class="hiddenSpace" id="hiddenSpace"> </p>
-    <input type="text" id="input">
+		<section class="triesSection">
+			<p id="tries" class="tries">Tries: 0</p>
+			<p class="mistakes" id="mistakes">Mistakes: 0</p>
+		</section>
 
-    <section class="triesSection">
-        <p id="tries" class="tries">tries: 0</p>
-        <p class="mistakes" id="mistakes">mistakes: 0</p>
-    </section>
+		<section class="buttons">
+			<button id="verifybutton">Verify</button>
+			<button id="randombutton">Random</button>
+		</section>
 
-    <section class="buttons">
-    <button id="verifybutton"> Verify </button>
-    <button id="randombutton" > Random </button>
-    </section>
-
-    <section id="result" class="result">
-
-    </section>
-    
-
-
-
-
-
-
-    <script>
-
-        verifybutton.addEventListener('click', function () {
-                        
-                    });
-   </script>
-
-
-</body>
-
-</html>     
+		<section id="result" class="result"></section>
+	</body>
+	<script src="script.js"></script>
+</html>
